@@ -34,5 +34,5 @@ app.use('/player', playerRoutes);
 // start a server
 // const server = http.createServer(app);
 // server.listen(3000) instead of these two line and require('http')
-app.listen(7000);
+app.listen(process.env.PORT || 7000);
 
