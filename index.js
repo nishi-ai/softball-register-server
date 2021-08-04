@@ -17,16 +17,8 @@ const playerRoutes = require('./routes/player')
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json())
 
-// serve static files
-// app.use(express.static(path.join(__dirname, 'web')));
-
 // call other routes and filter paths
 app.use('/player', playerRoutes);
-
-// handling 404 Error Page, no need this does on front end
-// app.use((req, res, next) => {
-//   res.status(404).send('Page not Found')
-// })
 
 // Connect to db
 // mongoose.connect('mongodb://localhost:27017', { useNewUrlParser: true, useUnifiedTopology: true })
