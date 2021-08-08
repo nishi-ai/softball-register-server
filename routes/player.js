@@ -2,7 +2,7 @@ const { response } = require('express');
 const express = require('express');
 
 // import controller
-const registrationsController = require('../controllers/registrations')
+const registrationsController = require('../controllers/registerController')
 
 const router = express.Router();
 

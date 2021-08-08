@@ -1,5 +1,8 @@
+// import database
+const db = require('../db');
+
 // import Player model
-const Player = require('../models/player');
+var Player = require('../models/Player')
 
 // GET
 exports.getRegistraionPage = (req, res) => {
@@ -10,13 +13,29 @@ exports.getRegistraionPage = (req, res) => {
 exports.postRegistraionInfo = (req, res, next) => {
     console.log("POST:")
     console.log(req.body);
-    const { name, email } = req.body;
+    const name = req.body.name;
+    const email = req.body.email;
     // create a new player with a local constant with new player
-    const player = new Player(req.body.name, req.body.email);
+    const player = new Player(name, email)
     // save it
     player.save();
     console.log("new player:", player)
-    // create validation manually in server side, instead using required function in front end
+    // connect to the database and save the new incoming player
+    db.getDb()
+        .db()
+        .collection('Player')
+        .insertOne(player)
+        .then(result => {
+            console.log(result);
+            res
+                .status(200)
+                .json( { message: 'Player added', playerID: result.insertedId })
+                .send({})
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json({ message: 'An error occured.' });
+        })
     if (
         !name || 
         name.trim() === '' ||

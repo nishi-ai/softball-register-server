@@ -1,5 +1,5 @@
 // import Player model
-const Player = require('../models/player')
+const Player = require('../models/Player')
 
 const express = require('express');
 
