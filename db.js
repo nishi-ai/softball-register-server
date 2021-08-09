@@ -1,19 +1,18 @@
-// //Set up default mongoose connection
-// var mongoDB = 'mongodb://localhost:27017'
-// mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
-
-// //Get the default connection
-// var db = mongoose.connection;
-
-// //Bind connection to error event (to get notification of connection errors)
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-
+// const mongoose = require('mongoose');
 
 const mongodb = require('mongodb');
-
 const MongoClient = mongodb.MongoClient;
-const mongoDbUrl = 
-    'mongodb+srv://root:superserect@cluster0.ddfbs.mongodb.net/softball'
+
+//Set up default mongoose connection
+var mongoDBLocal = 'mongodb://localhost:27017'
+var mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net/softball'
+// mongoose.connect(mongoDB || mongoDBLocal, { useNewUrlParser: true, useUnifiedTopology: true })
+
+//Get the default connection
+// var db = mongoose.connection;
+
+//Bind connection to error event (to get notification of connection errors)
+// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // no initial value inside
 let _db;
@@ -26,11 +25,11 @@ const initDb = callback => {
         console.log('Database is already initialized!')
         return callback(null, _db);
     }
-    // use mongoclient and call connect and use that mongoDbUrL
-    MongoClient.connect(mongoDbUrl)
+    MongoClient.connect(mongoDBLocal)
         // get access to the client which allows you to simply store the database
         .then(client => {
             // access to the database which was created
+            console.log('connected')
             _db = client;
             callback(null, _db);
         })

@@ -37,8 +37,8 @@ module.exports = class Player {
     save() {
         players.push(this);
         console.log('player array', players)
-        // const db = getDb();
-        // db.save(players)
+        const db = getDb();
+        db.save(players)
     }
     // fetch all existing players
     // static makes to call this fetchAll method directly on the class, not on an instantiated object
