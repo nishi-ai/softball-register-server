@@ -1,6 +1,9 @@
 const { response } = require('express');
 const express = require('express');
 
+// import controller
+const registrationsController = require('../controllers/registrations')
+
 const router = express.Router();
 
 // router.use === routes (all http methods) handler
@@ -9,30 +12,11 @@ router.use((req, res, next) => {
 });
   
 // /player/registration => GET
-router.get('/registration', function (req, res) {
-    console.log("GET: sending Hello")
-});
+// this express routes that it should take this function (getRegistraionPage) and store it.
+// Whenever a request reaches this route, it should go ahead and execute it.
+router.get('/registration', registrationsController.getRegistraionPage);
 
 // /player/registration => POST
-router.post('/registration', (req, res, next) => {
-    console.log("POST:")
-    console.log(req.body);
-    const { name, email } = req.body;
-    // create validation manually in server side, instead using required function in front end
-    if (
-        !name || 
-        name.trim() === '' ||
-        !email ||
-        !email.includes('@') ||
-        email.trim() === ''
-    ) {
-        res.status(422).json({ message: 'Invalid input.'})
-        // stop request here when the input is invalid
-        return;
-    }
-    res.status(200);
-    // need to return something json because frontend expects to receive `json.
-    res.send({});
-})
+router.post('/registration', registrationsController.postRegistraionInfo);
 
 module.exports = router;
