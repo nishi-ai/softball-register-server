@@ -1,18 +1,16 @@
-// const mongoose = require('mongoose');
-
 const mongodb = require('mongodb');
 const MongoClient = mongodb.MongoClient;
 
-//Set up default mongoose connection
-var mongoDBLocal = 'mongodb://localhost:27017'
-var mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net/softball'
-// mongoose.connect(mongoDB || mongoDBLocal, { useNewUrlParser: true, useUnifiedTopology: true })
+var mongoDB = 'mongodb://localhost:27017'
 
-//Get the default connection
-// var db = mongoose.connection;
-
-//Bind connection to error event (to get notification of connection errors)
-// db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+if (process.env.NODE_ENV === 'production') {
+    console.log("It's in production" );
+    // 
+    mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net/softball'
+    mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+} else {
+    console.log("It's in dev", process.env.NODE_ENV);
+}
 
 // no initial value inside
 let _db;
@@ -23,15 +21,15 @@ const initDb = callback => {
     // check if db is uninitialized or not
     if (_db) {
         console.log('Database is already initialized!')
-        return callback(null, _db);
+        return callback(null);
     }
-    MongoClient.connect(mongoDBLocal)
+    MongoClient.connect(mongoDB)
         // get access to the client which allows you to simply store the database
         .then(client => {
             // access to the database which was created
             console.log('connected')
             _db = client;
-            callback(null, _db);
+            callback(null);
         })
         .catch(err => {
         // execute callback and pass the error as the first argument

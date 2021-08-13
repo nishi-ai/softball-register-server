@@ -15,20 +15,26 @@ exports.postRegistraionInfo = (req, res, next) => {
     // create validation manually in server side, instead using required function in front end
     if (
         !name || 
-        name.trim() === '' ||
+        name.trim() === ''
+    ) {
+        res.status(422).json({ message: 'Please enter your name.'})
+        // stop request here when the input is invalid
+        return;
+    } else if (
         !email ||
         !email.includes('@') ||
         email.trim() === ''
     ) {
-        res.status(422).json({ message: 'Invalid input.'})
+        res.status(422).json({ message: 'Email should be entered and include @.'})
         // stop request here when the input is invalid
         return;
-    } else {
+    }
+    else {
         // connect to the database and save the new incoming player
         db.getDb()
-          .db()
+          .db('softball')
           // the collction will be created dynamically if it does not exist yet
-          .collection('players2')
+          .collection('players')
           .insertOne({
               name: name,
               email: email
@@ -42,7 +48,7 @@ exports.postRegistraionInfo = (req, res, next) => {
                         playerID: result.insertedId
                 })
                 // need to return something json because frontend expects to receive `json.
-                .send({})
+                .send() // no deed empty {}, 
            })
            // catching errors related to inserting the document into the database
            .catch(err => {

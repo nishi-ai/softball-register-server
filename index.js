@@ -23,7 +23,7 @@ app.use(bodyParser.json())
 app.use('/player', playerRoutes);
 
 // app connects to the database when app starts up before it starts listning to incoming requests
-db.initDb((err, db) => {
+db.initDb((err) => {
     if (err) {
         console.log(err);
     } else {
