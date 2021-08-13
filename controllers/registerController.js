@@ -1,16 +1,5 @@
-// token
-const jwt = require('jsonwebtoken');
-
 // import database
 const db = require('../db');
-
-// import Player model
-var Player = require('../models/Player')
-
-// create token to return a JSON Web Signature for a header and a payload.
-const createToken = () => {
-    return jwt.sign({}, 'secret', { expiresIn: '1h' });
-}
 
 // GET
 exports.getRegistraionPage = (req, res) => {
@@ -45,13 +34,10 @@ exports.postRegistraionInfo = (req, res, next) => {
               email: email
           })
           .then(result => {
-              console.log(result);
-              // use a token based authentication approach. return it in frontend app, which could theoretically handle that token to authenticate itself to the backend for future requests
-              const token = createToken();
+              console.log('result', result);
               res
                 .status(200)
-                .json({ token: token,
-                        player: { name: name, email: email },
+                .json({ player: { name: name, email: email },
                         message: 'Player added',
                         playerID: result.insertedId
                 })
