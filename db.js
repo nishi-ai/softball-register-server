@@ -5,9 +5,7 @@ let mongoDB = 'mongodb://localhost:27017'
 
 if (process.env.NODE_ENV === 'production') {
     console.log("It's in production" );
-    // 
     mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net'
-    mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 } else {
     console.log("It's in dev", process.env.NODE_ENV);
 }
@@ -23,7 +21,7 @@ const initDb = callback => {
         console.log('Database is already initialized!')
         return callback(null);
     }
-    MongoClient.connect(mongoDB)
+    MongoClient.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
         // get access to the client which allows you to simply store the database
         .then(client => {
             // access to the database which was created

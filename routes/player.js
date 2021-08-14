@@ -7,6 +7,12 @@ const router = express.Router();
 
 // router.use === routes (all http methods) handler
 router.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+        'Access-Control-Allow-Methods',
+        'GET,POST,PUT,PATCH,DELETE,OPTIONS'
+    );
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next(); // Allows the request to continue to the next middleware (app.use) in line
 });
   
