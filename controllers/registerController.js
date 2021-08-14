@@ -17,7 +17,7 @@ exports.postRegistraionInfo = (req, res, next) => {
         !name || 
         name.trim() === ''
     ) {
-        res.status(422).json({ message: 'Please enter your name.'})
+        res.status(422).json({ message: 'invalid-name'})
         // stop request here when the input is invalid
         return;
     } else if (
@@ -25,7 +25,7 @@ exports.postRegistraionInfo = (req, res, next) => {
         !email.includes('@') ||
         email.trim() === ''
     ) {
-        res.status(422).json({ message: 'Email should be entered and include @.'})
+        res.status(422).json({ message: 'invalid-email'})
         // stop request here when the input is invalid
         return;
     }
@@ -48,7 +48,7 @@ exports.postRegistraionInfo = (req, res, next) => {
                         playerID: result.insertedId
                 })
                 // need to return something json because frontend expects to receive `json.
-                .send() // no deed empty {}, 
+                // no need send(), res.json does this. 
            })
            // catching errors related to inserting the document into the database
            .catch(err => {
