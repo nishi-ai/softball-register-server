@@ -5,9 +5,7 @@ let mongoDB = 'mongodb://localhost:27017'
 
 if (process.env.NODE_ENV === 'production') {
     console.log("It's in production" );
-    // 
     mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net'
-    mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 } else {
     console.log("It's in dev", process.env.NODE_ENV);
 }
