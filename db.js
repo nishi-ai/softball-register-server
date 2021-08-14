@@ -21,7 +21,7 @@ const initDb = callback => {
         console.log('Database is already initialized!')
         return callback(null);
     }
-    MongoClient.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
+    MongoClient.connect(mongoDB)
         // get access to the client which allows you to simply store the database
         .then(client => {
             // access to the database which was created
