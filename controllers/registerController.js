@@ -17,7 +17,7 @@ exports.postRegistraionInfo = (req, res, next) => {
         !name || 
         name.trim() === ''
     ) {
-        res.status(422).json({ message: 'invalid-name'})
+        res.status(422).json({ message: 'invalid-name', name: name})
         // stop request here when the input is invalid
         return;
     } else if (
@@ -25,7 +25,7 @@ exports.postRegistraionInfo = (req, res, next) => {
         !email.includes('@') ||
         email.trim() === ''
     ) {
-        res.status(422).json({ message: 'invalid-email'})
+        res.status(422).json({ message: 'invalid-email', email: email})
         // stop request here when the input is invalid
         return;
     }
