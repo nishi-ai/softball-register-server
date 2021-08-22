@@ -1,4 +1,5 @@
 const express = require('express');
+const { body } = require('express-validator');
 
 // import controller
 const registrationsController = require('../controllers/registerController')
@@ -22,6 +23,14 @@ router.use((req, res, next) => {
 router.get('/registration', registrationsController.getRegistraionPage);
 
 // /player/registration => POST
-router.post('/registration', registrationsController.postRegistraionInfo);
+router.post('/registration', [
+    body('name')
+        .isString()
+        .isLength({ min: 2 })
+        .trim(),
+    body('email')
+        .isEmail()
+        .trim()
+] ,registrationsController.postRegistraionInfo);
 
 module.exports = router;
