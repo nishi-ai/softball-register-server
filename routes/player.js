@@ -1,6 +1,7 @@
 const express = require('express');
 
-// import controller
+// import controllers
+const validationController = require('../controllers/validationController')
 const registrationsController = require('../controllers/registerController')
 
 const router = express.Router();
@@ -22,6 +23,6 @@ router.use((req, res, next) => {
 router.get('/registration', registrationsController.getRegistraionPage);
 
 // /player/registration => POST
-router.post('/registration', registrationsController.postRegistraionInfo);
+router.post('/registration', validationController.validateNameAndEmail, registrationsController.postRegistraionInfo);
 
 module.exports = router;
