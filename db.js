@@ -5,7 +5,9 @@ let mongoDB = 'mongodb://localhost:27017'
 
 if (process.env.NODE_ENV === 'production') {
     console.log("It's in production" );
-    mongoDB = 'mongodb+srv://root:supersecret@cluster0.ddfbs.mongodb.net'
+    console.log('MONGODB_PASSWORD', process.env.MONGODB_PASSWORD);
+    console.log('MONGODB_USERNAME', process.env.MONGODB_USERNAME);
+    mongoDB = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.ddfbs.mongodb.net`
 } else {
     console.log("It's in dev", process.env.NODE_ENV);
 }
