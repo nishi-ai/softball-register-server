@@ -13,7 +13,7 @@ exports.getIndex = (req, res, next) => {
             {_id: 0, name: 1, email: 1}
         )
         .toArray(
-            function(result) {
+            function(err, result) {
                 if (result) {
                     res
                     .status(200)
