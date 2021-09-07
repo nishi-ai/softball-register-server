@@ -2,7 +2,7 @@
 const db = require('../db');
 
 // GET
-exports.getRegistraionPage = (req, res) => {
+exports.getRegistraionPage = (req, res, next) => {
     console.log("GET: sending Hello")
     res.json({
         hasError: false,
