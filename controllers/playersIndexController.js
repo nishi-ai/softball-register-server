@@ -13,16 +13,17 @@ exports.getIndex = (req, res, next) => {
             {_id: 0, name: 1, email: 1}
         )
         .toArray(
-            function(err, result) {
-                if (err) throw err;
+            function(result) {
                 if (result) {
                     res
                     .status(200)
                     .json(result)
                 } else {
-                    res.send(JSON.stringify({
-                        error : 'Error'
-                    }))
+                    res
+                    .status(500)
+                    .send(JSON.stringify({
+                        error: 'db-allPlayers-find-error'
+                    }));
                 }
             }
         ) 

@@ -9,7 +9,6 @@ exports.getRegistraionPage = (req, res, next) => {
         errorMessage: null,
         validationErrors: []
     });
-    next();
 };
 
 // POST
