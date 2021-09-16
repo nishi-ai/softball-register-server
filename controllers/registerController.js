@@ -42,7 +42,8 @@ exports.postRegistraionInfo = (req, res, next) => {
         })
         // catching errors related to inserting the document into the database
         .catch(err => {
-            console.log('Error is occured:', err);
-            res.status(500).json({ message: 'Registration for the player failed.' });
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(error);
         })
 };
