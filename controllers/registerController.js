@@ -43,7 +43,7 @@ exports.postRegistraionInfo = (req, res, next) => {
         // catching errors related to inserting the document into the database
         .catch(err => {
             const error = new Error(err);
-            error.httpStatusCode = 500;
-            return next(error);
+            console.error(error);
+            res.status(501).json({ message: JSON.stringify(err) });
         })
 };
