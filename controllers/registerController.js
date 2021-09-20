@@ -18,6 +18,7 @@ exports.postRegistraionInfo = (req, res, next) => {
     console.log(req.body);
     const name = req.body.name;
     const email = req.body.email;
+    const createdDate = new Date();
     // connect to the database and save the new incoming player
     db.getDb()
         .db('softball')
@@ -25,13 +26,14 @@ exports.postRegistraionInfo = (req, res, next) => {
         .collection('players')
         .insertOne({
             name: name,
-            email: email
+            email: email,
+            created_at: createdDate
         })
         .then(result => {
             console.log('result', result);
             res
             .status(200)
-            .json({ player: { name: name, email: email },
+            .json({ player: { name: name, email: email, created_at: createdDate },
                     message: 'Player added',
                     playerID: result.insertedId
             })
