@@ -44,8 +44,15 @@ exports.postRegistraionInfo = (req, res, next) => {
         })
         // catching errors related to inserting the document into the database
         .catch(err => {
-            const error = new Error(err);
-            console.error(error);
-            res.status(501).json({ message: JSON.stringify(err) });
+            if (err.code === 11000) {
+                // Duplicate email , catched error before saving into db
+                return res.status(500).json( {
+                    success: false,
+                    code: 11000,
+                    message: 'This email is already taken'
+                });
+            }
+            // some other errors
+            return res.status(500).json({ message: JSON.stringify(err) });
         })
 };
