@@ -25,13 +25,14 @@ exports.postRegistraionInfo = (req, res, next) => {
         .collection('players')
         .insertOne({
             name: name,
-            email: email
+            email: email,
+            created_at: new Date()
         })
         .then(result => {
             console.log('result', result);
             res
             .status(200)
-            .json({ player: { name: name, email: email },
+            .json({ player: { name: name, email: email, created_at: new Date() },
                     message: 'Player added',
                     playerID: result.insertedId
             })
