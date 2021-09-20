@@ -14,7 +14,7 @@ app.use(cors());
 // import all necessary routes
 const playerRoutes = require('./routes/player');
 const adminRoutes = require('./routes/admin');
-const errorRoutes = require('./routes/error');
+// const errorRoutes = require('./routes/error');
 
 // call body-parser and register a middleware by yielding with urlencoded
 // pass an option to be able to parse non-default feature 
@@ -25,7 +25,7 @@ app.use(bodyParser.json())
 app.use('/player', playerRoutes);
 app.use('/admin', adminRoutes);
 
-app.use(errorRoutes);
+// app.use(errorRoutes);
 
 // app connects to the database when app starts up before it starts listning to incoming requests
 db.initDb((err) => {
