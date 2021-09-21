@@ -25,6 +25,8 @@ exports.postRegistraionInfo = (req, res, next) => {
         // the collction will be created dynamically if it does not exist yet
         .collection('players')
         .insertOne({
+            // _id for testing duplicated-record
+            _id: "6149cebfe78b085815277716",
             name: name,
             email: email,
             created_at: createdDate
@@ -38,7 +40,7 @@ exports.postRegistraionInfo = (req, res, next) => {
                     playerID: result.insertedId
             })
             .end()
-            // doesn't call next()
+            // don't call next()
             // need to return something json because frontend expects to receive `json.
             // no need send(), res.json does this. 
         })
@@ -46,13 +48,14 @@ exports.postRegistraionInfo = (req, res, next) => {
         .catch(err => {
             if (err.code === 11000) {
                 // Duplicate email , catched error before saving into db
-                return res.status(500).json( {
+                // send 409 'Conflict'
+                return res.status(409).json( {
                     success: false,
                     code: 11000,
-                    message: 'This email is already taken'
+                    message: 'duplicated-record'
                 });
             }
             // some other errors
-            return res.status(500).json({ message: JSON.stringify(err) });
+            return res.status(500).json({ message: JSON.stringify(err.message) });
         })
 };
