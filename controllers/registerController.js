@@ -25,8 +25,6 @@ exports.postRegistraionInfo = (req, res, next) => {
         // the collction will be created dynamically if it does not exist yet
         .collection('players')
         .insertOne({
-            // _id for testing duplicated-record
-            _id: "6149cebfe78b085815277716",
             name: name,
             email: email,
             created_at: createdDate
