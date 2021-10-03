@@ -38,13 +38,22 @@ exports.postRegistraionInfo = (req, res, next) => {
                     playerID: result.insertedId
             })
             .end()
-            // doesn't call next()
+            // don't call next()
             // need to return something json because frontend expects to receive `json.
             // no need send(), res.json does this. 
         })
         // catching errors related to inserting the document into the database
         .catch(err => {
-            console.log('Error is occured:', err);
-            res.status(500).json({ message: 'Registration for the player failed.' });
+            if (err.code === 11000) {
+                // Duplicate email , catched error before saving into db
+                // send 409 'Conflict'
+                return res.status(409).json( {
+                    success: false,
+                    code: 11000,
+                    message: 'duplicated-record'
+                });
+            }
+            // some other errors
+            return res.status(500).json({ message: JSON.stringify(err.message) });
         })
 };
