@@ -23,6 +23,7 @@ const initDb = callback => {
         console.log('Database is already initialized!')
         return callback(null);
     }
+    console.log('MongoDB: connecting...')
     MongoClient.connect(mongoDB)
         // get access to the client which allows you to simply store the database
         .then(client => {
