@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 const url = require('url');
 const querystring = require('querystring');
+const config = require('config')
 
 exports.validateNameAndEmail = [
     // name is required at least 2 chars long
@@ -33,18 +34,13 @@ exports.validateAdminPassword = (req, res, next) => {
         console.log("It's in production_admin" );
         adminPassword = process.env.ADMIN_PASSWORD;
         console.log('adminPassword', adminPassword);
-        rawUrl = `https://softball-register-web.herokuapp.com/admin/players/?password=${process.env.ADMIN_PASSWORD}`
+        rawUrl = `https://softball-register-server.herokuapp.com/admin/players/?password=${adminPassword}`
     } else {
         console.log("It's in dev_admin");
-        adminPassword = 'fakepassword'
+        adminPassword = config.get('Admin.adminConfig.password')
         console.log('adminPassword', adminPassword);
         rawUrl = `http://localhost:7000/admin/players/?password=${adminPassword}`
     }
-
-    const parsedUrl = url.parse(rawUrl);
-    const parsedQs = querystring.parse(parsedUrl.query);
-    console.log("parsedUrl", parsedUrl);
-    console.log("parsedQs", parsedQs);
 
     const password = req.query.password
     console.log("password", password);
