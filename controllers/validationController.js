@@ -38,9 +38,9 @@ exports.validateNameAndEmail = [
 exports.validateAdminPassword = (req, res, next) => {
 
     const adminPassword = config.get('Customer.settings.adminAccounts.__name');
-    console.log("adminPassword", adminPassword);
+    // console.log("adminPassword", adminPassword);
     const password = req.query.password
-    console.log("password", password);
+    // console.log("password", password);
     if (password === adminPassword) {
         // then good to go to players  
         next();
