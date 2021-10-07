@@ -1,12 +1,9 @@
 const db = require('../db');
 
-// GET http://localhost:7000/admin/players
 exports.getIndex = (req, res, next) => {
     console.log("GET: Hello getPlayersPage")
-    // connect to the database and save the new incoming player
     db.getDb()
         .db('softball')
-        // the collction will be created dynamically if it does not exist yet
         .collection('players')
         .find(
             {},

@@ -1,0 +1,8 @@
+{
+    "dbConfig": {
+      "host": "https://softball-register-server.herokuapp.com/"
+    },
+    "settings": {
+      "adminAccounts": "ADMIN_PASSWORD"
+    }
+}

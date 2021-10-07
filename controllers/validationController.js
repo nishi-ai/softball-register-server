@@ -1,4 +1,7 @@
 const { body, validationResult } = require('express-validator');
+// const url = require('url');
+// const querystring = require('querystring');
+const config = require('config')
 
 exports.validateNameAndEmail = [
     // name is required at least 2 chars long
@@ -25,3 +28,28 @@ exports.validateNameAndEmail = [
     next();
     },
 ];
+
+ // comment in and install 'url' & 'querystring' when unit test 
+    // const parsedUrl = url.parse(rawUrl);
+    // const parsedQs = querystring.parse(parsedUrl.query);
+    // console.log("parsedUrl", parsedUrl);
+    // console.log("parsedQs", parsedQs);
+
+exports.validateAdminPassword = (req, res, next) => {
+
+    const adminPassword = config.get('settings.adminAccounts');
+    // console.log("adminPassword", adminPassword);
+    const password = req.query.password
+    // console.log("password", password);
+    if (password === adminPassword) {
+        // then good to go to players  
+        next();
+    } else {
+        res
+        .status(403)
+        .send(JSON.stringify({
+        error: 'Enter a valid password'
+        }));
+    }
+    
+}
