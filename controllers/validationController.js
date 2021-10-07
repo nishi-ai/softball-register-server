@@ -31,15 +31,9 @@ exports.validateNameAndEmail = [
 
 exports.validateAdminPassword = (req, res, next) => {
     if (process.env.NODE_ENV === 'production') {
-        console.log("It's in production_admin" );
         adminPassword = process.env.ADMIN_PASSWORD;
-        console.log('adminPassword', adminPassword);
-        rawUrl = `https://softball-register-server.herokuapp.com/admin/players/?password=${adminPassword}`
     } else {
-        console.log("It's in dev_admin");
         adminPassword = config.get('Admin.adminConfig.password')
-        console.log('adminPassword', adminPassword);
-        rawUrl = `http://localhost:7000/admin/players/?password=${adminPassword}`
     }
 
     const password = req.query.password
