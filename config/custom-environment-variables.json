@@ -4,10 +4,7 @@
       "host": "https://softball-register-server.herokuapp.com/"
     },
     "settings": {
-      "adminAccounts": {
-        "__name": "ADMIN_PASSWORD",
-        "__format": "json"
-      }
+      "adminAccounts": "ADMIN_PASSWORD"
     }
   }
 }
