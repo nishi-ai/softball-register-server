@@ -1,6 +1,6 @@
 const { body, validationResult } = require('express-validator');
-const url = require('url');
-const querystring = require('querystring');
+// const url = require('url');
+// const querystring = require('querystring');
 const config = require('config')
 
 exports.validateNameAndEmail = [
@@ -29,13 +29,16 @@ exports.validateNameAndEmail = [
     },
 ];
 
-exports.validateAdminPassword = (req, res, next) => {
-    if (process.env.NODE_ENV === 'production') {
-        adminPassword = process.env.ADMIN_PASSWORD;
-    } else {
-        adminPassword = config.get('Admin.adminConfig.password')
-    }
+ // comment in and install 'url' & 'querystring' when unit test 
+    // const parsedUrl = url.parse(rawUrl);
+    // const parsedQs = querystring.parse(parsedUrl.query);
+    // console.log("parsedUrl", parsedUrl);
+    // console.log("parsedQs", parsedQs);
 
+exports.validateAdminPassword = (req, res, next) => {
+
+    const adminPassword = config.get('Customer.settings.adminAccounts.__name');
+    console.log("adminPassword", adminPassword);
     const password = req.query.password
     console.log("password", password);
     if (password === adminPassword) {

@@ -1,7 +1,13 @@
 {
-    "Admin": {
-      "adminConfig": {
-        "password": "fakepassword"
+    "Customer": {
+      "dbConfig": {
+        "host": "localhost"
+      },
+      "settings": {
+        "adminAccounts": {
+          "__name": "fakepassword",
+          "__format": "json"
+        }
       }
     }
-}
+  }

@@ -1,0 +1,13 @@
+{
+  "Customer": {
+    "dbConfig": {
+      "host": "https://softball-register-server.herokuapp.com/"
+    },
+    "settings": {
+      "adminAccounts": {
+        "__name": "ADMIN_PASSWORD",
+        "__format": "json"
+      }
+    }
+  }
+}
