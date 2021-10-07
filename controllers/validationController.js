@@ -37,7 +37,7 @@ exports.validateNameAndEmail = [
 
 exports.validateAdminPassword = (req, res, next) => {
 
-    const adminPassword = config.get('Customer.settings.adminAccounts');
+    const adminPassword = config.get('settings.adminAccounts');
     // console.log("adminPassword", adminPassword);
     const password = req.query.password
     // console.log("password", password);
