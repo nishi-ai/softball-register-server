@@ -18,10 +18,10 @@ exports.getEventsIndex = (req, res, next) => {
                 } else {
                     res
                     .status(500)
-                    .send(JSON.stringify({
+                    .json({
                         error: 'db-events-find-error',
                         message: err
-                    }));
+                    });
                 }
             }
         ) 

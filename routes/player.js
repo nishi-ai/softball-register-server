@@ -19,5 +19,4 @@ router.get('/registration', registrationsController.getRegistraionPage);
 // /player/registration => POST
 router.post('/registration', validationController.validateNameAndEmail, registrationsController.postRegistraionInfo);
 
-
 module.exports = router;

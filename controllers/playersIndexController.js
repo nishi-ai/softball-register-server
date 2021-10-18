@@ -18,9 +18,10 @@ exports.getIndex = (req, res, next) => {
                 } else {
                     res
                     .status(500)
-                    .send(JSON.stringify({
-                        error: 'db-allPlayers-find-error'
-                    }));
+                    .json({
+                        error: 'db-players-find-error',
+                        message: err
+                    });
                 }
             }
         ) 
