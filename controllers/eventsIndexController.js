@@ -1,13 +1,13 @@
 const db = require('../db');
 
-exports.getIndex = (req, res, next) => {
-    console.log("GET: Hello getPlayersPage")
+exports.getEventsIndex = (req, res, next) => {
+    console.log("GET: Hello getEvents")
     db.getDb()
         .db('softball')
-        .collection('players')
+        .collection('events')
         .find(
             {},
-            {_id: 0, name: 1, email: 1}
+            {_id: 0, date: 1, result: 1}
         )
         .toArray(
             function(err, result) {
@@ -19,7 +19,7 @@ exports.getIndex = (req, res, next) => {
                     res
                     .status(500)
                     .json({
-                        error: 'db-players-find-error',
+                        error: 'db-events-find-error',
                         message: err
                     });
                 }

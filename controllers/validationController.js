@@ -51,5 +51,4 @@ exports.validateAdminPassword = (req, res, next) => {
         error: 'Enter a valid password'
         }));
     }
-    
 }
