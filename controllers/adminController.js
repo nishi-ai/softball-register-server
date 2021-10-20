@@ -30,7 +30,7 @@ exports.getIndex = (req, res, next) => {
 
 exports.postDeletePlayer = (req, res, next) => {
     console.log('Here DESTROY PLAYER(S)');
-    const emailsArray = ["test@test.com", "test1@test.com"]
+    const emailsArray = req.body.data
     db.getDb()
         .db('softball')
         .collection('players')
