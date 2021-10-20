@@ -1,4 +1,5 @@
 const db = require('../db');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.getIndex = (req, res, next) => {
     console.log("GET: Hello getPlayersPage")
@@ -25,4 +26,19 @@ exports.getIndex = (req, res, next) => {
                 }
             }
         ) 
+};
+
+exports.postDeletePlayer = (req, res, next) => {
+    console.log('Here DESTROY PLAYER(S)');
+    const emailsArray = ["test@test.com", "test1@test.com"]
+    db.getDb()
+        .db('softball')
+        .collection('players')
+        .deleteMany({ email: {$in: emailsArray } })
+        .then(() => {
+            console.log('DESTROYED PLAYER(S)');
+            console.log(emailsArray)
+            res.redirect('/admin/players');
+        })
+        .catch(err => console.log(err));
 };
