@@ -1,5 +1,4 @@
 const db = require('../db');
-const ObjectId = require('mongodb').ObjectID;
 
 exports.getIndex = (req, res, next) => {
     console.log("GET: Hello getPlayersPage")
@@ -38,7 +37,17 @@ exports.postDeletePlayer = (req, res, next) => {
         .then(() => {
             console.log('DESTROYED PLAYER(S)');
             console.log(emailsArray)
-            res.redirect('/admin/players');
+            res
+            .status(200)
+            .json({message: 'ok'})
         })
-        .catch(err => console.log(err));
+        .catch((err) => {
+            console.log(err)
+            res.
+            status(500)
+            .json({
+                error: 'db-players-could-not-delete',
+                message: err
+                });
+        })
 };

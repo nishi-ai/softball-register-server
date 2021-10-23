@@ -8,7 +8,7 @@ const router = express.Router();
 // Get all players info
 // /admin/players => GET
 // validate a password to get players infos
-router.get('/players/', validationController.validateAdminPassword, adminController.getIndex);
-router.get('/delete-players/', adminController.postDeletePlayer);
+router.get('/players', validationController.validateAdminPassword, adminController.getIndex);
+router.delete('/players', validationController.validateAdminPassword, adminController.postDeletePlayer);
 
 module.exports = router;
