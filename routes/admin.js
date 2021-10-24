@@ -1,13 +1,14 @@
 const express = require('express');
 
 const validationController = require('../controllers/validationController')
-const indexController = require('../controllers/playersIndexController');
+const adminController = require('../controllers/adminController');
 
 const router = express.Router();
 
 // Get all players info
 // /admin/players => GET
 // validate a password to get players infos
-router.get('/players/', validationController.validateAdminPassword, indexController.getIndex);
+router.get('/players', validationController.validateAdminPassword, adminController.getIndex);
+router.delete('/players', validationController.validateAdminPassword, adminController.postDeletePlayer);
 
 module.exports = router;
