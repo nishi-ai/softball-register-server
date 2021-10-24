@@ -29,14 +29,17 @@ exports.getIndex = (req, res, next) => {
 
 exports.postDeletePlayer = (req, res, next) => {
     console.log('Here DESTROY PLAYER(S)');
-    const emailsArray = req.body.data
+    console.log('req.body:', req.body)
+    const emailsArray = req.body
+    // const emailsArray = ["test4@test.com", "test5@test.com"]
+    // console.log('emailsArray:', emailsArray)
     db.getDb()
         .db('softball')
         .collection('players')
         .deleteMany({ email: {$in: emailsArray } })
         .then(() => {
             console.log('DESTROYED PLAYER(S)');
-            console.log(emailsArray)
+            // console.log(emailsArray)
             res
             .status(200)
             .json({message: 'ok'})
