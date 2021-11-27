@@ -32,7 +32,7 @@ db.initDb((err) => {
         console.log(err);
     } else {
         // start a server, when the connection with database is established
-        app.listen(process.env.PORT || 7000);
+        app.listen(process.env.PORT || 8000);
     }
 })
 

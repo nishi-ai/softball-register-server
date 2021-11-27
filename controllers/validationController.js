@@ -41,14 +41,36 @@ exports.validateAdminPassword = (req, res, next) => {
     // console.log("adminPassword", adminPassword);
     const password = req.query.password
     // console.log("password", password);
-    if (password === adminPassword) {
-        // then good to go to players  
-        next();
-    } else {
+    
+    // get headers authorization
+    const authheader = req.headers.authorization;
+    console.log('req.headers.authorization', authheader);
+    // and distract only token password
+    const tokenPass = authheader.split(' ')[1]
+    console.log("tokenPass", tokenPass);
+
+    // get token password from frontend
+    // const authheaderPass = req.query.authorization
+    // console.log("authheaderPass", authheaderPass);
+
+    if (password === adminPassword || tokenPass) {
+            // then good to go to players
+            console.log('authenticated')  
+            next();
+    }
+    else if (password != adminPassword) {
         res
         .status(403)
         .send(JSON.stringify({
         error: 'Enter a valid password'
+        }));
+    }
+    else if (authheaderPass != tokenPass) {
+        res
+        .status(401)
+        .setHeader('WWW-Authenticate', 'Token')
+        .send(JSON.stringify({
+        error: 'You are not authenticated!'
         }));
     }
 }
