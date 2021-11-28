@@ -52,8 +52,8 @@ exports.validateAdminPassword = (req, res, next) => {
     // get token password from frontend
     // const authheaderPass = req.query.authorization
     // console.log("authheaderPass", authheaderPass);
-
-    if (password === adminPassword || tokenPass) {
+    // password === adminPassword
+    if (tokenPass) {
             // then good to go to players
             console.log('authenticated')  
             next();
@@ -65,7 +65,7 @@ exports.validateAdminPassword = (req, res, next) => {
         error: 'Enter a valid password'
         }));
     }
-    else if (authheaderPass != tokenPass) {
+    else if (!tokenPass) {
         res
         .status(401)
         .setHeader('WWW-Authenticate', 'Token')
