@@ -52,8 +52,7 @@ exports.validateAdminPassword = (req, res, next) => {
     // get token password from frontend
     // const authheaderPass = req.query.authorization
     // console.log("authheaderPass", authheaderPass);
-    // password === adminPassword
-    if (tokenPass) {
+    if (password === adminPassword || tokenPass) {
             // then good to go to players
             console.log('authenticated')  
             next();
