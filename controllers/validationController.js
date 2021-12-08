@@ -46,14 +46,18 @@ exports.validateAdminPassword = (req, res, next) => {
     // and distract only token password
     if (typeof authheader !== 'undefined') {
         const tokenPass = authheader.split(' ')[1]
-        console.log("tokenPass", tokenPass);
+        // console.log("tokenPass", tokenPass);
         // get token password from frontend
         if (password === adminPassword || tokenPass === adminPassword) {
             // then good to go to players
             console.log('authenticated')  
             next();
         }
-    } else {
+    // keep query string authorisation way
+    } else if (typeof authheader === 'undefined' && password === adminPassword) {
+        next();
+    }
+    else {
         res
         .status(403)
         .setHeader('WWW-Authenticate', 'Token')
