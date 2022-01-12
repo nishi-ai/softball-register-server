@@ -38,31 +38,26 @@ exports.validateNameAndEmail = [
 exports.validateAdminPassword = (req, res, next) => {
 
     const adminPassword = config.get('settings.adminAccounts');
-    const password = req.query.password
-    
+    console.log('adminPassword', adminPassword)    
     // get headers authorization
     const authheader = req.headers.authorization;
     console.log('req.headers.authorization', authheader);
-    // and distract only token password
     if (typeof authheader !== 'undefined') {
+        // distract only token password
         const tokenPass = authheader.split(' ')[1]
-        // console.log("tokenPass", tokenPass);
+        console.log("tokenPass", tokenPass);
         // get token password from frontend
-        if (password === adminPassword || tokenPass === adminPassword) {
+        if (tokenPass === adminPassword) {
             // then good to go to players
             console.log('authenticated')  
             next();
+            // return here to make this if & if done and anything else goes to error 403
+            return;
         }
-    // keep query string authorisation way
-    } else if (typeof authheader === 'undefined' && password === adminPassword) {
-        next();
     }
-    else {
-        res
-        .status(403)
-        .setHeader('WWW-Authenticate', 'Token')
-        .send(JSON.stringify({
-        error: 'You are not authenticated! Enter a valid password'
-        }));
-    }
+    res
+    .status(403)
+    .send(JSON.stringify({
+    error: 'You are not authenticated! Enter a valid password'
+    }));
 }
