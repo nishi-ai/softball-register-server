@@ -21,7 +21,7 @@ docker-compose down
 
 ## Migrations
 
-Run javascript files in `/db/migrations` folder sequentially.
+After starting the mongoDb, run javascript files in `/db/migrations` folder sequentially.
 If specifies `NODE_ENV=development`, they will be ran in development mode and they would adds seed data as well.
 ```
 export NODE_ENV=development
