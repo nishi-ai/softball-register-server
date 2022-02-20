@@ -25,9 +25,8 @@ After starting the mongoDb, run javascript files in `/db/migrations` folder sequ
 If specifies `NODE_ENV=development`, they will be ran in development mode and they would adds seed data as well.
 ```
 export NODE_ENV=development
-node /db/migrations/001_create_softball_db.js
-node /db/migrations/002_create_players_collection.js
-node /db/migrations/003_create_events_collection.js
+node /db/migrations/001_create_players_collection.js
+node /db/migrations/002_create_events_collection.js
 ...
 so on
 ```
