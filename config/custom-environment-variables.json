@@ -7,5 +7,11 @@
     },
     "api_key" : {
         "SENDGRID": "SENDGRID_API_KEY"
+    },
+    "recipient" : {
+        "to" : "aiaimforworld@gmail.com, benevbright@gmail.com"
+    },
+    "sender" : {
+        "from" : "admin@catsdogssoftball.com"
     }
 }

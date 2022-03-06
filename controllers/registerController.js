@@ -2,22 +2,40 @@
 const db = require('../db');
 const nodemailer = require('nodemailer');
 const sendgridTransport = require('nodemailer-sendgrid-transport')
-
 const config = require('config');
-const sgapiKey = config.get('api_key.SENDGRID');
-// create reusable transporter object using sendgridTransport, which
-// returns a configuration that nodemailer can use, to use sendgrid
-const transporter = nodemailer.createTransport(sendgridTransport({
-    auth: {
-        api_key: sgapiKey
-    }
-}));
 
-let message = {
-    to: 'aiaimforworld@gmail.com, benevbright@gmail.com',
-    from: 'admin@catsdogssoftball.com',
-    subject: 'We got a registraion to our team!',
-    html: '<h2> We got a registraion to our team!</h2>'
+const recipient = config.get('recipient.to');
+const sender = config.get('sender.from');
+const getEmailObject = (name, email, date) => {
+    return {
+        to: recipient,
+        from: sender,
+        subject: 'We have a jappy news for you!',
+        html: `<p>Dear Admin</p>
+                <p> You got a registraion to our team!</p>
+                Name: ${name}<br>
+                Email: ${email}<br>
+                Registered at: ${date}
+            `
+    }
+}
+
+const sendEmail = async (name, email, date) => {
+    const sgapiKey = config.get('api_key.SENDGRID');
+    // create reusable transporter object using sendgridTransport, which
+    // returns a configuration that nodemailer can use, to use sendgrid
+    const transporter = nodemailer.createTransport(sendgridTransport({
+        auth: {
+            api_key: sgapiKey
+        }
+    }));
+    const message = getEmailObject(name, email, date);
+    try {
+        await transporter.sendMail(message)
+    } catch(error) {
+        console.log(error);
+    }
+    transporter.close();
 }
 // GET
 exports.getRegistraionPage = (req, res, next) => {
@@ -55,15 +73,7 @@ exports.postRegistraionInfo = (req, res, next) => {
                     message: 'Player added',
                     playerID: result.insertedId
             })
-            try {
-                transporter.sendMail(message)
-            } catch(err) {
-                console.log(err);
-                if (error.response) {
-                    console.error(error.response.body)
-                }
-            };
-            transporter.close();
+           sendEmail(name, email, createdDate.toDateString())
         // don't call next()
         // need to return something json because frontend expects to receive `json.
         // no need send(), res.json does this.
@@ -83,3 +93,4 @@ exports.postRegistraionInfo = (req, res, next) => {
             return res.status(500).json({ message: JSON.stringify(err.message) });
         })
 };
+
