@@ -1,6 +1,24 @@
 // import database
 const db = require('../db');
+const nodemailer = require('nodemailer');
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 
+const config = require('config');
+const sgapiKey = config.get('api_key.SENDGRID');
+// create reusable transporter object using sendgridTransport, which
+// returns a configuration that nodemailer can use, to use sendgrid
+const transporter = nodemailer.createTransport(sendgridTransport({
+    auth: {
+        api_key: sgapiKey
+    }
+}));
+
+let message = {
+    to: 'aiaimforworld@gmail.com, benevbright@gmail.com',
+    from: 'admin@catsdogssoftball.com',
+    subject: 'We got a registraion to our team!',
+    html: '<h2> We got a registraion to our team!</h2>'
+}
 // GET
 exports.getRegistraionPage = (req, res, next) => {
     console.log("GET: sending Hello")
@@ -37,10 +55,18 @@ exports.postRegistraionInfo = (req, res, next) => {
                     message: 'Player added',
                     playerID: result.insertedId
             })
-            .end()
-            // don't call next()
-            // need to return something json because frontend expects to receive `json.
-            // no need send(), res.json does this. 
+            try {
+                transporter.sendMail(message)
+            } catch(err) {
+                console.log(err);
+                if (error.response) {
+                    console.error(error.response.body)
+                }
+            };
+            transporter.close();
+        // don't call next()
+        // need to return something json because frontend expects to receive `json.
+        // no need send(), res.json does this.
         })
         // catching errors related to inserting the document into the database
         .catch(err => {
