@@ -5,8 +5,11 @@
     "settings": {
         "adminAccounts": "fakepassword"
     },
+    "api_key" : {
+        "SENDGRID": "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"
+    },
     "recipient" : {
-        "to" : ["aiaimforworld@gmail.com,  benevbright@gmail.com"]
+        "to" : ["aiaimforworld@gmail.com",  "benevbright@gmail.com"]
     },
     "sender" : {
         "from" : "admin@catsdogssoftball.com"
