@@ -6,7 +6,7 @@
         "adminAccounts": "fakepassword"
     },
     "recipient" : {
-        "to" : "aiaimforworld@gmail.com,  benevbright@gmail.com"
+        "to" : ["aiaimforworld@gmail.com,  benevbright@gmail.com"]
     },
     "sender" : {
         "from" : "admin@catsdogssoftball.com"

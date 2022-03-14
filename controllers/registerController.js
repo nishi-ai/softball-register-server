@@ -10,7 +10,7 @@ const getEmailObject = (name, email, date) => {
     return {
         to: recipient,
         from: sender,
-        subject: 'We have a jappy news for you!',
+        subject: 'We have a happy news for you!',
         html: `<p>Dear Admin</p>
                 <p> You got a registraion to our team!</p>
                 Name: ${name}<br>
