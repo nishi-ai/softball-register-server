@@ -4,5 +4,8 @@
     },
     "settings": {
       "adminAccounts": "ADMIN_PASSWORD"
+    },
+    "api_key" : {
+        "SENDGRID": "SENDGRID_API_KEY"
     }
 }

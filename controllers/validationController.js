@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator');
 // const url = require('url');
 // const querystring = require('querystring');
-const config = require('config')
+const config = require('config');
 
 exports.validateNameAndEmail = [
     // name is required at least 2 chars long
@@ -14,7 +14,6 @@ exports.validateNameAndEmail = [
         .isEmail()
         .trim(),
     (req, res, next) => {
-    console.log('----error')
     // check all erros by passing the request to validation result
     const errors = validationResult(req);
     // if there is some errors
