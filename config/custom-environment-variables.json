@@ -7,5 +7,8 @@
     },
     "api_key" : {
         "SENDGRID": "SENDGRID_API_KEY"
+    },
+    "email_template" : {
+      "SIGN_UP": "SIGNUP_EMAIL"
     }
 }
