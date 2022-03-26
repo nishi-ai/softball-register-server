@@ -1,14 +1,15 @@
 const config = require('config');
 const sgMail = require('@sendgrid/mail');
 
+const sgapiKey = config.get('api_key.SENDGRID');
+sgMail.setApiKey(sgapiKey);
 const recipient = config.get('recipient.to');
 const sender = config.get('sender.from');
+const signedUptemplate_id = config.get('email_template.SIGN_UP');
 
-const sendEmail = async (message) => {
-    const sgapiKey = config.get('api_key.SENDGRID');
-    sgMail.setApiKey(sgapiKey);
+const sendEmail = async (emailParams) => {
     try {
-        await sgMail.send(message)
+        await sgMail.send(emailParams)
     } catch(error) {
         console.log(error);
 
@@ -33,7 +34,6 @@ const getAdminEmailObject = (name, email, date) => {
 };
 
 const getSignedUpEmailObject = (email, name) => {
-    const signedUptemplate_id = config.get('email_template.SIGN_UP');
     return {
         to: email,
         from: sender,

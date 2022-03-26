@@ -5,6 +5,12 @@
     "settings": {
         "adminAccounts": "fakepassword"
     },
+    "api_key" : {
+        "SENDGRID": "SENDGRID_API_KEY"
+    },
+    "email_template" : {
+        "SIGN_UP": "SIGNUP_EMAIL"
+    },
     "recipient" : {
         "to" : ["aiaimforworld@gmail.com", "benevbright@gmail.com"]
     },
