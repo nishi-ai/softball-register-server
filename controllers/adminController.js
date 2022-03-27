@@ -27,30 +27,24 @@ exports.getIndex = (req, res, next) => {
         ) 
 };
 
-exports.postDeletePlayer = (req, res, next) => {
+exports.postDeletePlayer = async (req, res) => {
     console.log('Here DESTROY PLAYER(S)');
     console.log('req.body:', req.body)
     const emailsArray = req.body
-    // const emailsArray = ["test4@test.com", "test5@test.com"]
-    // console.log('emailsArray:', emailsArray)
-    db.getDb()
-        .db('softball')
-        .collection('players')
-        .deleteMany({ email: {$in: emailsArray } })
-        .then(() => {
-            console.log('DESTROYED PLAYER(S)');
-            // console.log(emailsArray)
-            res
-            .status(200)
-            .json({message: 'ok'})
-        })
-        .catch((err) => {
-            console.log(err)
-            res.
-            status(500)
-            .json({
-                error: 'db-players-could-not-delete',
-                message: err
-                });
-        })
+    try {
+        const collection = db.getDb().db('softball').collection('players')
+        await collection.deleteMany({ email: {$in: emailsArray } })
+        console.log('DESTROYED PLAYER(S)');
+        res
+        .status(200)
+        .json({message: 'ok'})
+    } catch(err) {
+        console.log(err)
+        res.
+        status(500)
+        .json({
+            error: 'db-players-could-not-delete',
+            message: err
+            });
+    }
 };
