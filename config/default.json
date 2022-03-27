@@ -6,10 +6,10 @@
         "adminAccounts": "fakepassword"
     },
     "api_key" : {
-        "SENDGRID": "SENDGRID_API_KEY"
+        "SENDGRID": "xxx"
     },
     "email_template" : {
-        "SIGN_UP": "SIGNUP_EMAIL"
+        "SIGN_UP": "xxx"
     },
     "recipient" : {
         "to" : ["aiaimforworld@gmail.com", "benevbright@gmail.com"]
