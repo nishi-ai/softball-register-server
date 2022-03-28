@@ -1,30 +1,27 @@
 const db = require('../db');
 
-exports.getIndex = (req, res, next) => {
+exports.getIndex = async (req, res) => {
     console.log("GET: Hello getPlayersPage")
-    db.getDb()
-        .db('softball')
-        .collection('players')
-        .find(
+    try {
+        const collectionPlayers = db.getDb().db('softball').collection('players')
+        const result = await collectionPlayers.find(
             {},
             {_id: 0, name: 1, email: 1}
         )
-        .toArray(
-            function(err, result) {
-                if (result) {
-                    res
-                    .status(200)
-                    .json(result)
-                } else {
-                    res
-                    .status(500)
-                    .json({
-                        error: 'db-players-find-error',
-                        message: err
-                    });
-                }
-            }
-        ) 
+        .toArray()
+        console.log('result', result)
+        res
+        .status(200)
+        .json(result)
+    } catch(err) {
+        console.log(err)
+        res
+        .status(500)
+        .json({
+            error: 'db-players-could-not-find',
+            message: err
+        });
+    }
 };
 
 exports.postDeletePlayer = async (req, res) => {
@@ -32,9 +29,9 @@ exports.postDeletePlayer = async (req, res) => {
     console.log('req.body:', req.body)
     const emailsArray = req.body
     try {
-        const collection = db.getDb().db('softball').collection('players')
-        await collection.deleteMany({ email: {$in: emailsArray } })
-        console.log('DESTROYED PLAYER(S)');
+        const collectionPlayers = db.getDb().db('softball').collection('players')
+        const result = await collectionPlayers.deleteMany({ email: {$in: emailsArray } })
+        console.log("Deleted " + result.deletedCount + " players");
         res
         .status(200)
         .json({message: 'ok'})
@@ -45,6 +42,6 @@ exports.postDeletePlayer = async (req, res) => {
         .json({
             error: 'db-players-could-not-delete',
             message: err
-            });
+        });
     }
 };
