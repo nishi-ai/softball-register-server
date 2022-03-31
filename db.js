@@ -17,25 +17,23 @@ let _db;
 
 // initDb simply points at a function which receives a callback
 // to establish a connection
-const initDb = callback => {
-    // check if db is uninitialized or not
+
+const initDb = async (callback) => {
     if (_db) {
         console.log('Database is already initialized!')
         return callback(null);
     }
     console.log('MongoDB: connecting...')
-    MongoClient.connect(mongoDB)
+    try {
+        const client = await MongoClient.connect(mongoDB);
         // get access to the client which allows you to simply store the database
-        .then(client => {
-            // access to the database which was created
-            console.log('connected')
-            _db = client;
-            callback(null);
-        })
-        .catch(err => {
-        // execute callback and pass the error as the first argument
-        callback(err);
-    });
+        // access to the database which was created
+        console.log('connected')
+        _db = client;
+        callback(null);
+    } catch(err) {
+        console.log(err)
+    }
 }
 
 // getDb, to get access to this established existing database
