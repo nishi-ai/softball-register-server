@@ -11,14 +11,15 @@ exports.getEventsIndex = async (req, res) => {
         .toArray()
         console.log('allEvents', allEvents)
         res
-        .status(200)
-        .json(allEvents);
+          .status(200)
+          .json(allEvents);
     } catch(err) {
         console.log(err)
-        .status(500)
-        .json({
+        res
+          .status(500)
+          .json({
             error: 'db-events-could-not-find',
             message: err
-            });
-        }
+        });
+    }
 };

@@ -32,6 +32,7 @@ const initDb = async (callback) => {
         _db = client;
         callback(null);
     } catch(err) {
+        callback(err);
         console.log(err)
     }
 }

@@ -33,15 +33,15 @@ exports.postDeletePlayer = async (req, res) => {
         const result = await collectionPlayers.deleteMany({ email: {$in: emailsArray } })
         console.log("Deleted " + result.deletedCount + " players");
         res
-        .status(200)
-        .json({message: 'ok'})
+          .status(200)
+          .json({message: 'ok'})
     } catch(err) {
         console.log(err)
-        res.
-        status(500)
-        .json({
+        res
+          .status(500)
+          .json({
             error: 'db-players-could-not-delete',
             message: err
-        });
+          });
     }
 };
