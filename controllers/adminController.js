@@ -1,56 +1,47 @@
 const db = require('../db');
 
-exports.getIndex = (req, res, next) => {
+exports.getIndex = async (req, res) => {
     console.log("GET: Hello getPlayersPage")
-    db.getDb()
-        .db('softball')
-        .collection('players')
-        .find(
+    try {
+        const collectionPlayers = db.getDb().db('softball').collection('players')
+        const result = await collectionPlayers.find(
             {},
             {_id: 0, name: 1, email: 1}
         )
-        .toArray(
-            function(err, result) {
-                if (result) {
-                    res
-                    .status(200)
-                    .json(result)
-                } else {
-                    res
-                    .status(500)
-                    .json({
-                        error: 'db-players-find-error',
-                        message: err
-                    });
-                }
-            }
-        ) 
+        .toArray()
+        console.log('result', result)
+        res
+        .status(200)
+        .json(result)
+    } catch(err) {
+        console.log(err)
+        res
+        .status(500)
+        .json({
+            error: 'db-players-could-not-find',
+            message: err
+        });
+    }
 };
 
-exports.postDeletePlayer = (req, res, next) => {
+exports.postDeletePlayer = async (req, res) => {
     console.log('Here DESTROY PLAYER(S)');
     console.log('req.body:', req.body)
     const emailsArray = req.body
-    // const emailsArray = ["test4@test.com", "test5@test.com"]
-    // console.log('emailsArray:', emailsArray)
-    db.getDb()
-        .db('softball')
-        .collection('players')
-        .deleteMany({ email: {$in: emailsArray } })
-        .then(() => {
-            console.log('DESTROYED PLAYER(S)');
-            // console.log(emailsArray)
-            res
-            .status(200)
-            .json({message: 'ok'})
-        })
-        .catch((err) => {
-            console.log(err)
-            res.
-            status(500)
-            .json({
-                error: 'db-players-could-not-delete',
-                message: err
-                });
-        })
+    try {
+        const collectionPlayers = db.getDb().db('softball').collection('players')
+        const result = await collectionPlayers.deleteMany({ email: {$in: emailsArray } })
+        console.log("Deleted " + result.deletedCount + " players");
+        res
+          .status(200)
+          .json({message: 'ok'})
+    } catch(err) {
+        console.log(err)
+        res
+          .status(500)
+          .json({
+            error: 'db-players-could-not-delete',
+            message: err
+          });
+    }
 };

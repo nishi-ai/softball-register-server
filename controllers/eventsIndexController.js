@@ -1,28 +1,25 @@
 const db = require('../db');
 
-exports.getEventsIndex = (req, res, next) => {
+exports.getEventsIndex = async (req, res) => {
     console.log("GET: Hello getEvents")
-    db.getDb()
-        .db('softball')
-        .collection('events')
-        .find(
+    try { 
+        const collectionEvents = db.getDb().db('softball').collection('events')
+        const allEvents = await collectionEvents.find(
             {},
             {_id: 0, date: 1, result: 1}
         )
-        .toArray(
-            function(err, result) {
-                if (result) {
-                    res
-                    .status(200)
-                    .json(result)
-                } else {
-                    res
-                    .status(500)
-                    .json({
-                        error: 'db-events-find-error',
-                        message: err
-                    });
-                }
-            }
-        ) 
+        .toArray()
+        console.log('allEvents', allEvents)
+        res
+          .status(200)
+          .json(allEvents);
+    } catch(err) {
+        console.log(err)
+        res
+          .status(500)
+          .json({
+            error: 'db-events-could-not-find',
+            message: err
+        });
+    }
 };
