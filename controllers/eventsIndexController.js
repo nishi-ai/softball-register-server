@@ -8,6 +8,7 @@ exports.getEventsIndex = async (req, res) => {
             {},
             {_id: 0, date: 1, result: 1}
         )
+        .sort({ date: -1 })
         .toArray()
         console.log('allEvents', allEvents)
         res
